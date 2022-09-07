@@ -1,0 +1,297 @@
+https://www.youtube.com/watch?v=pKd0Rpw7O48&list=PL7wbckluTjxTuxNTKCI7c4bwLFCiQif6c&ab_channel=ProgrammingwithMosh
+
+JS needs an engine(compiler/interpreter) to run, which converts a JS code into machine understandable language.
+
+Back there, all the browsers were having tgheir own JS engines inbuilt.
+
+Google Chrome came with its own JS engine called V8.
+V8 was converting JS code in to machine code so much faster than any other browser does.
+V8 was using JIT approch wich makes it so much faster.
+
+So since JS was performing so well, now everyone thinking that JS should be used outside the front-end web-development also.
+
+In 2009, 'Ryan Dahl' founder of Node.js, took google's V8 engine and embeded inside a C++ program and called it Node
+
+in node, we do not have objects similar to environment objects we have in the browser like DOM.
+
+we have more interesting objects like http, fs, os, process etc.
+
+So 'node.js' is a Runtime environment of JS which uses JS's 'V8 engine' itself to convert JS code into machine code.
+
+node.js is used to run JS on servers and stand alone systems.
+
+so basically with node.js we can rin JS code at backend also.
+
+node.js has lots of modules to work with.
+i.e) if we put HTTP module/componant inside node.js, then we can run it on servers also.
+
+It has inbuilt as well as different modules wich we can download seperately too.
+
+for compelte web development, node.js is not enough itself.
+In different languages we have different frameworks for web-development.
+ie. Java = Spring, Python = django so here in JS we have 'Express' framework.
+
+    MERN (mongoDB Express React Node)
+    MEAN (mongoDB Express Angular Node)
+
+these all are using JS, so by using these tools we can build a whole web site.
+fullstack development using JavaScript.
+
+---------------------------
+    How Node.js works ?
+---------------------------
+video : 
+
+https://www.youtube.com/watch?v=TlB_eWDSMt4&list=PL7wbckluTjxTuxNTKCI7c4bwLFCiQif6c&index=2&ab_channel=ProgrammingwithMosh
+
+https://www.youtube.com/watch?v=YSyFSnisip0&list=PLsyeobzWxl7occsESx2X1E2R2Uw5wCoeG&index=4&ab_channel=Telusko
+
+Java uses tomcat as a web server. Tomcat supports multithreading of java.
+Tomcat supports maximum 200 threads at a time.
+
+JavaScript is a single threaded language. There is no concept of threading.
+So what if more than one client requests at a time ? can node.js work parallaly ?
+client have to wait for his turn to comeup?
+
+Node.js has a solution to it.
+
+Node.js has features like,
+
+    1) Non-blocking I/O
+        
+        - Not any request can block that single thread.
+        - As soon as thread gets the request, it sent that request to the other resource/worker to handle and got free itself.
+        
+        - Who is the WORKERS ? What are THEY if not Threads?
+        - To implement this, Node.js uses the concept of 'libuv'.
+        - 'libuv' is a special library build for node.js and it provides the concept of Non-blocking I/O.
+        - It is built in 'C language'.
+        - It uses the 'System Kernel', and since Kernel has MULTIPLE THREADS, we are not directly using multi-threads but behind the scene kernel is implementing multiple threads.
+        - And thats what make node.js fast and flexible.
+        
+        - But what if client request for some CPU intensive works that needs a lot processing, so that thread will be busy performing processing stuff for that request and other clients will be waiting.
+        - So DO NOT prefer Node.js in 'CPU INTENSIVE WORK'.
+        - Prefer it in 'I/O INTENSIVE' works. (interactions with DBs, files, other resources except processing)
+    
+    2) Asynchronous
+
+        - Now what if the resouce responded back to the thread with the data a alient request asked for.
+        - Now the feature Asynchronous works here. its a concept of callback.
+        - Once resouce has generated result, it put is an EventQueue.
+        - Node monitors this EventQueue continously in the background.
+        - When Node finds an Event in the Queue, it will take it out and process it.
+        - callback function is executed when got a response from the resouce back. and send it back to the client as a response.
+
+
+- another feature of node.js is Package manager:
+
+- it allows you to use predefined packages by other developers of the world, which saves your time and efforts to make suitable APIs/modules/packages for your application.
+- you can fetch/download then and use them
+- you can also push your modules/packages.
+
+-----------------------------
+ NPM: (node package manager)
+-----------------------------
+
+    ref: https://www.npmjs.com/
+
+    in node.js we need to use packages/modules to work with.
+    i.e) in java we have packages/dependencies (.jar files)
+
+    Every node application/file has atleast one module.
+    we can see that by console.log(module).
+    module is not a global object though
+
+    Node has so many inbuilt modules to work with like os, http, event, fs etc.
+
+    Modules are the small ENCAPSULATED units, which you can reuse and share with others and easier to maintain. We can achiev modularity.
+
+    creating basic package : D:\VsCode\node.js\CreatingModule
+
+    in node.js, NPM provides us the packages/modules we need.
+    or we can create our own modules too.
+
+    npm is a part of GitHub.
+
+    Chocolaty is a NPM for windows
+
+    How to install packages from npm?
+
+    cmd> npm install package_name
+    i.e) npm install express
+
+-----------
+  Globals
+-----------
+
+    in browser, we have a global object called 'window'.
+    all the global properies and methods are accessible by that window object in JavaScript.
+    i.e)
+        window.console.log('hi there')
+        var hello = 'hello'
+        console.log(window.hello)
+    
+    But in Node we do not have window object, we have object called 'global'.
+    so all globals are part of global, but unlike JavaScript, 'var' variables are not part of globals.
+
+------------
+ Express JS
+------------
+
+    Documentaion: https://expressjs.com/en/4x/api.html#app
+
+    Node.js is a JavaScript run - time environment that is fast, but itdoes not support request handling, HTTP methods or serving files.
+
+    So this is where Express JS comes into the picture.
+    It is the most popular framework of node.js, used to build/design APIs,, web applications and cross-platfrom mobile apps.
+
+    It is high-performence, ligh-weight, fast and unopinionated.
+
+    It is used as a server side scripting language.
+
+    It is used to build single, multi and hybrid page applications.
+
+    It handles Routing, HTTP methods, Error handling etc.
+
+    It is fast to connect with databases like mongoDB, MySQL etc.
+
+    Need of Express JS ->
+
+        If we write code for designing APIs or anything in node.js and express.js, express js simplifies the code and reduces time, efforts and line of codes we have to write.
+
+------------------------------------
+ JSON (JavaScript Object Notation):
+------------------------------------
+
+    it's a predefined format/structure to transfer data from servers to client and client to servers.
+
+    in html, we create web pages and that contains structure, desingn and other stuff also.
+
+    but what if we want only data?
+    sometimes we already have design and structure, we only need data.
+    then, we can use XML or JSON.
+
+    XML is a traditional way to transfer data, but JSON is replacing XML in places.
+
+    since we are living in the object oriented world, so we generally stores and use data by objects.
+    so JSON uses JavaScript Notation for objects to transfer data in objects over web.
+    i.e)
+    {
+        eid: '33',
+        ename: 'Dharmil Shah',
+        salary: '50000',
+        department: 'Web-development',
+    }
+
+    to do these, on server side we have to convert out object into JSON format, and at client side we have to convert that JSON into object so client application can use it.
+
+    to convert, there are some libraries available like 'GSON', 'JACKSON'.
+    
+    We have HTTP methods to transfer data.
+    C -> Create -> POST
+    R -> Read   -> GET
+    U -> Update -> PUT
+    D -> Delete -> Delete
+
+    our browser supports only 2 methods, GET and POST.
+    to use other methods, we have to use other tools/client/REST-client like postman.
+    Using postman we can test our REST APIs.
+    https://www.postman.com/product/what-is-postman/
+
+    it is used mostly everywhere, especially in REST APIs.
+
+------------
+  REST API
+------------
+
+    We have many web services available on the internet that provide us the kind of data we want. We just want to use it.
+
+    We can do it using API (Application Programming Interface).
+    API connects server(service provider) and client(user) for information interchange.
+
+    since we want just data, APIs use XML or JSON to transfer data.
+    
+    XML:
+        <country>
+            <city>
+                <temprature> 33 </temprature>
+                <humidity> 40 </humidity>
+            </city>
+        </country>
+
+    JSON:
+        {
+            'country': {
+                'city':{
+                    'temp':33,
+                    'humidity':40,
+                }
+            }
+        }
+
+    We are not sending an actual object, but we are sending the values of that object in a different 'Representational State Transfer' (XML/JSON). So we are sending state of an object.
+
+    Thats how it's called REST API.(REpresentational State Transfer API)
+
+    Hww do we inplement REST API?
+
+        there are many methods, but some of the famous ways in java are 'jersey' and 'Sparing'.
+
+-----------------
+  R O U T I N G
+-----------------
+
+    In our websites, we will be having multiple different links.
+    For different type of link, we pass the different request.
+    For different requests, we will be having different response.
+
+    So how to handle a particular request?
+    it's decided with the he;p of routing
+
+    express has that concept inbuilt.
+
+    There are different methods in express like get, post, put, delete etc.
+    To fetch data from the server, we use get()
+    To send the data, we use post()
+
+    get() will take 2 parameters.
+
+        1) URL (which you are targeting)
+        - So in our case, we are requesting for home-page(/).
+
+        2) function(req, res)
+        - To perform tasks/operations on that URL requests.
+
+    There are 2 ways to send/recive the request
+        1) parameters
+            127.0.0.1:9000/student/33
+            this method is used with REST APIs
+    
+        2) query string
+            127.0.0.1:9000/student?id=33
+            it is used in simple browsing
+
+-----------
+  Nodemon
+-----------
+
+    Nodemon (node monitor) is a package which takes care of restarting server every time wa made change in our code.
+
+    It does it automatically for us everytime we make change in file and save it.
+
+    to install is globally, run command
+    cmd> npm install -g nodemon
+
+    instead using app with cmd>node app.js
+    use cmd>nodemon app.js
+
+-------
+  Joi
+-------
+    https://www.npmjs.com/package/joi
+
+    it's a module we can install using npm.
+    it is used for validation purpose.
+    validation becomes easier with joi.
+
+    How to use: https://joi.dev/api/?v=17.6.0

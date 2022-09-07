@@ -6,6 +6,7 @@
  * JSON format is used here as a middleware
  */
 
+const handleRequest = require('./handleRequest')
 const express = require('express')
 const app = express()
 app.use(express.json()) // using middleware express.json
@@ -20,41 +21,20 @@ app.use(express.json()) // using middleware express.json
 */
 const PORT = process.env.PORT || 9000
 
-// Class Course to store course information
-class Course {
-    constructor(id, name) {
-        this.id = id
-        this.name = name
-    }
-}
-
-// a predefined array of the Course
-const courses = [
-    new Course(1, 'Java') ,
-    new Course(2, 'JavaScript') ,
-    new Course(3, 'Python') ,
-]
-
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}...`))
 
 /**
  * GET request
  */
-const handleGetRequest = (courseId, res) => {
-    if(isNaN(courseId)) return res.status(400).send('ERROR: invalid course id given')
-    let index = courses.findIndex(x => x.id == courseId)
-    if(index !== -1) res.send(courses[index])
-    else res.status(404).send("ERROR: course with id:"+courseId+" not found")
-}
 
 app.get('/', (req, res) => res.send('Hello User...'))
 app.get('/api/course', (req, res) => {
     // if id is defined in queryString
-    if(req.query.id) handleGetRequest(parseInt(req.query.id), res)
+    if(req.query.id) handleRequest.get(parseInt(req.query.id), res)
     else res.send(courses)
 })
 app.get('/api/course/:id', (req, res) => {
-    handleGetRequest(parseInt(req.params.id), res)
+    handleRequest.get(parseInt(req.params.id), res)
 })
 
 /*
@@ -76,27 +56,12 @@ app.get('/api/course/:id', (req, res) => {
     then create a JSON object as per your need
 */
 
-const handlePostRequest = (courseName, res) => {
-    // if 'name' property doest not exist in bodys
-    if(!courseName) return res.status(400).send("ERROR: 'name' is not defined")
-
-    // if course is already exist in array
-    let index = courses.findIndex(x => x.name.toLowerCase() == courseName.toLowerCase())
-    if(index !== -1) return res.status(400).send('ERROR: Course "'+courseName+'" already exist...')
-    
-    // create new object and store it in array and return new object
-    courses.push(new Course(courses.length+1, courseName))
-
-    // in case user want to know the id/details of the new course, we send it.
-    res.send(courses[courses.length-1])
-}
-
 app.post('/api/course', (req, res) => {
-    if(req.body.name) handlePostRequest(req.body.name, res)
-    else handlePostRequest(req.query.name, res)
+    if(req.body.name) handleRequest.post(req.body.name, res)
+    else handleRequest.post(req.query.name, res)
 })
 app.post('/api/course/:name', (req, res) => {
-    handlePostRequest(req.params.name, res)
+    handleRequest.post(req.params.name, res)
 })
 
 /*
@@ -105,25 +70,13 @@ app.post('/api/course/:name', (req, res) => {
  * it is used to update exsisting data
  * we will check it trough postman also
  */
-const handlePutRequest = (courseId, courseName, res) => {
-    // if undefine, return 400
-    if(!courseId  || !courseName) return res.status(400).send("ERROR: 'id' or 'name' is not defined")
-
-    // if not exist, return 404
-    let index = courses.findIndex(x => x.id == courseId)
-    if(index == -1) return res.status(404).send("ERROR: course with id:"+courseId+" not found")
-
-    // Update course and return updated course
-    courses[index].name = courseName
-    res.send(courses[index])
-}
 
 app.put('/api/course', (req, res) => {
-    if(req.body.id && req.body.name) handlePutRequest(parseInt(req.body.id), req.body.name, res)
-    else handlePutRequest(parseInt(req.query.id), req.query.name, res)
+    if(req.body.id && req.body.name) handleRequest.put(parseInt(req.body.id), req.body.name, res)
+    else handleRequest.put(parseInt(req.query.id), req.query.name, res)
 })
 app.put('/api/course/:id/:name', (req, res) => {
-    handlePutRequest(parseInt(req.params.id), req.params.name, res)
+    handleRequest.put(parseInt(req.params.id), req.params.name, res)
 })
 
 /**
@@ -132,21 +85,11 @@ app.put('/api/course/:id/:name', (req, res) => {
  * It is used to send request to delete particular element from resource
  * We can't send it through our browser
  */
-const handleDeleteRequest = (courseId, res) => {
-    if(!courseId) return res.status(400).send("ERROR: 'id' is not defined")
-        
-    let index = courses.findIndex(x => x.id == courseId)
-    if(index == -1) return res.status(404).send("ERROR: course with id:"+courseId+" not found")
-    
-    let deleted = courses[index]
-    // delete 1 element from given index
-    courses.splice(index, 1)
-    res.send(deleted)
-}
 
 app.delete('/api/course', (req, res) => {
-    handleDeleteRequest(parseInt(req.body.id), res)
+    if(req.body.id) handleRequest.delete(parseInt(req.body.id), res)
+    else handleRequest.delete(parseInt(req.query.id), res)
 })
 app.delete('/api/course/:id', (req, res) => {
-    handleDeleteRequest(parseInt(req.params.id), res)
+    handleRequest.delete(parseInt(req.params.id), res)
 })
